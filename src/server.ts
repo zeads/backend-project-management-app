@@ -6,19 +6,29 @@ import projectRouter from "./routes/project.route";
 import userRouter from "./routes/user.route";
 import taskRouter from "./routes/task.route";
 
-const app = express();
+// dbConnect();
+async function init() {
+  try {
+    const result = await dbConnect();
+    console.log("Database status : ", result);
 
-app.use(express.json());
+    const app = express();
 
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/project", projectRouter);
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/task", taskRouter);
+    app.use(express.json());
 
-dbConnect();
+    app.use("/api/auth", authRouter);
+    app.use("/api/project", projectRouter);
+    app.use("/api/user", userRouter);
+    app.use("/api/task", taskRouter);
 
-const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+init();
