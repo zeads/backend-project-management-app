@@ -16,6 +16,10 @@ async function init() {
 
     app.use(express.json());
 
+    app.get("/", (req, res) => {
+      res.status(200).json({ message: "Server is running", data: null });
+    });
+
     app.use("/api/auth", authRouter);
     app.use("/api/project", projectRouter);
     app.use("/api/user", userRouter);
