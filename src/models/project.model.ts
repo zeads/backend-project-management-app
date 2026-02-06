@@ -7,7 +7,7 @@ export interface IProject extends Document {
   description: string;
   deadline: Date;
   createdBy: Types.ObjectId;
-  status: "pending" | "in progress" | "completed";
+  status: "On Hold" | "Active" | "Completed";
 }
 
 const projectSchema = new Schema<IProject>(
@@ -39,11 +39,11 @@ const projectSchema = new Schema<IProject>(
     },
     status: {
       type: String,
-      enum: ["pending", "in progress", "completed"],
-      default: "pending",
+      enum: ["On Hold", "Active", "Completed"],
+      default: "On Hold",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // export default mongoose.model("Project", projectSchema);
