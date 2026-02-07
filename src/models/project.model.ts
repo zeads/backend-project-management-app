@@ -8,6 +8,8 @@ export interface IProject extends Document {
   deadline: Date;
   createdBy: Types.ObjectId;
   status: "On Hold" | "Active" | "Completed";
+  progress: number;
+  team: Types.ObjectId[];
 }
 
 const projectSchema = new Schema<IProject>(
@@ -42,6 +44,16 @@ const projectSchema = new Schema<IProject>(
       enum: ["On Hold", "Active", "Completed"],
       default: "On Hold",
     },
+    progress: {
+      type: Number,
+      default: 0,
+    },
+    team: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true },
 );
