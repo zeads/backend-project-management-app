@@ -42,7 +42,7 @@ const projectSchema = new Schema<IProject>(
     status: {
       type: String,
       enum: ["On Hold", "Active", "Completed"],
-      default: "On Hold",
+      default: "Active",
     },
     progress: {
       type: Number,
