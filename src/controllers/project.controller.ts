@@ -14,7 +14,9 @@ export const store = async (req: Request, res: Response) => {
 
 export const index = async (req: Request, res: Response) => {
   try {
-    const data = await Project.find().populate("createdBy", "-password");
+    const data = await Project.find()
+      .populate("createdBy", "-password")
+      .populate("team", "-password");
     res.status(200).json({ message: "Get projects successfully", data });
   } catch (error: any) {
     if (error) {
@@ -27,7 +29,7 @@ export const show = async (req: Request, res: Response) => {
   try {
     const data = await Project.findById(req.params.id).populate(
       "createdBy",
-      "-password"
+      "-password",
     );
     res.status(200).json({ message: "Get project successfully", data });
   } catch (error: any) {
