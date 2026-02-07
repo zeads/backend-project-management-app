@@ -3,9 +3,9 @@ import mongoose, { Types } from "mongoose";
 const { Schema } = mongoose;
 
 export interface IProject extends Document {
-  name: string;
+  title: string;
   description: string;
-  deadline: Date;
+  dueDate: Date;
   createdBy: Types.ObjectId;
   status: "On Hold" | "Active" | "Completed";
   progress: number;
@@ -14,7 +14,7 @@ export interface IProject extends Document {
 
 const projectSchema = new Schema<IProject>(
   {
-    name: {
+    title: {
       type: String,
       required: [true, "Name is required"],
       unique: [true, "Name must be unique"],
@@ -24,15 +24,15 @@ const projectSchema = new Schema<IProject>(
       required: [true, "Description is required"],
       minlength: [10, "Description must be at least 10 characters"],
     },
-    deadline: {
+    dueDate: {
       type: Date,
       validate: {
         validator: function (value: any) {
           return value > Date.now();
         },
-        message: "Deadline must be in the future",
+        message: "dueDate must be in the future",
       },
-      required: [true, "Deadline is required"],
+      required: [true, "dueDate is required"],
     },
     createdBy: {
       type: Schema.Types.ObjectId,
