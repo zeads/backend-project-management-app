@@ -3,7 +3,17 @@ import Project from "../models/project.model";
 
 export const store = async (req: Request, res: Response) => {
   try {
-    const data = await Project.create({ ...req.body });
+    // const data = await Project.create({ ...req.body });
+    const userId = (req as any).user.id;
+
+    const { title, description, dueDate, team } = req.body;
+    const data = await Project.create({
+      title,
+      description,
+      dueDate,
+      createdBy: userId,
+      team,
+    });
     res.status(201).json({ message: "Project created successfully", data });
   } catch (error: any) {
     if (error) {
