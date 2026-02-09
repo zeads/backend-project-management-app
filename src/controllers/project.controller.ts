@@ -22,18 +22,45 @@ export const store = async (req: Request, res: Response) => {
   }
 };
 
-export const index = async (req: Request, res: Response) => {
+// export const index = async (req: Request, res: Response) => {
+//   try {
+//     const data = await Project.find()
+//       .populate("createdBy", "-password")
+//       .populate("team", "-password");
+//     res.status(200).json({ message: "Get projects successfully", data });
+//   } catch (error: any) {
+//     if (error) {
+//       return res.status(500).json({ message: error.message });
+//     }
+//   }
+// };
+
+// -------------
+export const showSearch = async (req: Request, res: Response) => {
   try {
-    const data = await Project.find()
-      .populate("createdBy", "-password")
-      .populate("team", "-password");
-    res.status(200).json({ message: "Get projects successfully", data });
-  } catch (error: any) {
-    if (error) {
-      return res.status(500).json({ message: error.message });
+    const { title, status } = req.query;
+
+    const filter: any = {};
+
+    if (title) {
+      // Menggunakan regex agar pencarian bersifat 'partial match' dan 'case-insensitive'
+      filter.title = { $regex: title, $options: "i" };
     }
+
+    if (status) {
+      filter.status = status;
+    }
+    const data = await Project.find(filter).populate("createdBy", "-password");
+    res.status(200).json({
+      message: "Get projects successfully",
+      count: data.length,
+      data,
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 };
+// -------------
 
 export const show = async (req: Request, res: Response) => {
   try {
