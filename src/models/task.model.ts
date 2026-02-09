@@ -8,7 +8,7 @@ export interface ITask extends Document {
   project: Types.ObjectId;
   assignedTo: Types.ObjectId;
   deadline: Date;
-  status: "todo" | "in progress" | "done";
+  status: "todo" | "in-progress" | "done";
   createdBy: Types.ObjectId;
 }
 
@@ -57,7 +57,7 @@ const taskSchema = new Schema<ITask>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // export default mongoose.model("Task", taskSchema);
