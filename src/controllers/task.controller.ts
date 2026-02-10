@@ -47,6 +47,21 @@ export const show = async (req: Request, res: Response) => {
   }
 };
 
+// ------------------
+export const showByProject = async (req: Request, res: Response) => {
+  try {
+    const task = await Task.find({ project: req.params.id })
+      .populate("createdBy", "-password")
+      .populate("assignedTo", "-password");
+    res.status(200).json({ message: "Get task successfully", data: task });
+  } catch (error: any) {
+    if (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
+};
+// ------------------
+
 export const update = async (req: Request, res: Response) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
